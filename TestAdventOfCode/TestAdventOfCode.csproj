@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-        <TargetFramework>net8.0</TargetFramework>
+        <TargetFramework>net7.0</TargetFramework>
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
 
@@ -23,7 +23,15 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\AdventOfCode2023\AdventOfCode2023.csproj" />
+        <ProjectReference Include="..\AdventOfCode2023\AdventOfCode2023.csproj"/>
     </ItemGroup>
+
+    <Target Name="PostBuild" AfterTargets="PostBuildEvent">
+        <ItemGroup>
+            <DataFiles Include="$(ProjectDir)Data/*" />
+        </ItemGroup>
+        <MakeDir Directories="$(OutputPath)Data" />
+        <Copy SourceFiles="@(DataFiles)" DestinationFolder="$(OutputPath)Data" ContinueOnError="true"/>
+    </Target>
 
 </Project>
